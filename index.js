@@ -8,6 +8,7 @@ const logger = require("./middleware/logger");
 const user = require("./routes/users");
 const cors = require("cors");
 const auth = require("./routes/auth");
+const group = require("./routes/groups");
 const message = require("./routes/messages");
 const { Message, validate } = require("./models/message");
 const { User } = require("./models/user");
@@ -40,34 +41,27 @@ app.use(logger);
 app.use("/api/user", user);
 app.use("/api/message", message);
 app.use("/api/auth", auth);
+app.use("/api/group", group);
 
 app.get("/", async (req, res) => {
-  let friends = await User.findById("60f832d13c86234bb031f568")
-    .populate("friendList")
-    .select("friendList");
+  let friends = await User.find().populate("friendList");
 
   res.send(friends);
 });
 
 io.on("connection", (socket) => {
-
   var room_name;
 
   console.log("client connect...", socket.id);
 
-  var clientId = socket.request._query["foo"];
-  //Get the chatID of the user and join in a room of the same chatID
-
-  //Leave the room if the user closes the socket
   socket.on("disconnect", () => {});
 
-  socket.on("typing", function name(data) {
-    io.emit("typing", data);
-
-    socket.in("receiverChatID").emit("typing", "typing");
+  socket.on("typing", (data) => {
+    var rooms = socket.adapter.rooms;
+    // console.log(room_name);
+    socket.broadcast.to(room_name).emit("typing", data);
+    // io.broadcast.to(room_name).broadcast.emit();
   });
-
-
 
   socket.on("join-friends-room", async (data) => {
     room_name = `${data.sender}-${data.recepient}`;
@@ -83,7 +77,6 @@ io.on("connection", (socket) => {
     } else {
       socket.join(room_name);
     }
-
 
     let messages = await Message.find({
       $where: `(this.sender == '${data.sender}' && this.recepient  == '${data.recepient}') || (this.recepient == '${data.sender}' && this.sender  == '${data.recepient}') `,
@@ -121,7 +114,7 @@ io.on("connection", (socket) => {
 
     await message.save();
 
-      let messages = await Message.find({
+    let messages = await Message.find({
       $where: `(this.sender == '${data.senderId}' && this.recepient  == '${data.recipientId}') || (this.recepient == '${data.senderId}' && this.sender  == '${data.recipientId}') `,
     });
 

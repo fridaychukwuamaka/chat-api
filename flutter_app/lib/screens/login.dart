@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/providers/auth.dart';
 import 'package:flutter_app/screens/home_page.dart';
-import 'package:flutter_app/screens/providers/auth.dart';
 import 'package:flutter_app/screens/sign_up.dart';
 import 'package:flutter_app/widgets/app_button.dart';
 import 'package:get/get.dart';
@@ -58,100 +58,98 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: ListView(
-          padding: EdgeInsets.all(20),
-          children: [
-            SizedBox(
-              height: 20,
+    return Scaffold(
+      body: ListView(
+        padding: EdgeInsets.all(20),
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            height: 55,
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Text(
+            'Log In',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 26,
             ),
-            SizedBox(
-              height: 55,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+            'Enter your emails and password',
+            style: TextStyle(
+              color: Color(0xFF7C7C7C),
+              fontWeight: FontWeight.w500,
             ),
-            SizedBox(
-              height: 50,
-            ),
-            Text(
-              'Log In',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 26,
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          InputWidget(
+            label: 'Phone',
+            controller: _phoneController,
+            errorText: emailError,
+            maxLines: 1,
+            isObsured: false,
+            hint: '+23242323431',
+            keyboardType: TextInputType.phone,
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          InputWidget(
+            label: 'Password',
+            errorText: passwordError,
+            maxLines: 1,
+            isObsured: true,
+            controller: _passwordController,
+            hint: 'password',
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          AppButton(
+            label: 'Log In',
+            onPressed: login,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Don't have an account? ",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Text(
-              'Enter your emails and password',
-              style: TextStyle(
-                color: Color(0xFF7C7C7C),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            InputWidget(
-              label: 'Phone',
-              controller: _phoneController,
-              errorText: emailError,
-              maxLines: 1,
-              isObsured: false,
-              hint: '+23242323431',
-              keyboardType: TextInputType.phone,
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            InputWidget(
-              label: 'Password',
-              errorText: passwordError,
-              maxLines: 1,
-              isObsured: true,
-              controller: _passwordController,
-              hint: 'password',
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            AppButton(
-              label: 'Log In',
-              onPressed: login,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Don't have an account? ",
+              GestureDetector(
+                child: Text(
+                  'Sign Up',
                   style: TextStyle(
+                    // color: .primaryColor,
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
                   ),
                 ),
-                GestureDetector(
-                  child: Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      // color: .primaryColor,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                    ),
-                  ),
-                  onTap: () {
-                    Get.to(SignUpPage());
-                  },
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 50,
-            ),
-          ],
-        ),
+                onTap: () {
+                  Get.to(SignUpPage());
+                },
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 50,
+          ),
+        ],
       ),
     );
   }

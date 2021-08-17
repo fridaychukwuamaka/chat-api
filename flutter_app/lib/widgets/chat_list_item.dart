@@ -10,12 +10,14 @@ class ChatListItem extends StatelessWidget {
     @required this.subTitle,
     @required this.missedMsg,
     @required this.onTap,
+    this.isGeneric : false,
   });
 
   final String leading;
   final String title;
   final String subTitle;
   final String missedMsg;
+  final bool isGeneric ;
   final Function onTap;
 
   @override
@@ -25,36 +27,38 @@ class ChatListItem extends StatelessWidget {
       leading: UserAvatar(
         backgroundColor: kMainBlue,
       ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            child: Text(
-              missedMsg,
-              textScaleFactor: 0.8,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-            padding: EdgeInsets.all(5.8),
-            decoration: BoxDecoration(
-              color: kMainBlue,
-              shape: BoxShape.circle,
-            ),
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Text(
-            'Just now',
-            textScaleFactor: 0.85,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
+      trailing: !isGeneric
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  child: Text(
+                    missedMsg,
+                    textScaleFactor: 0.8,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                  padding: EdgeInsets.all(5.8),
+                  decoration: BoxDecoration(
+                    color: kMainBlue,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  'Just now',
+                  textScaleFactor: 0.85,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            )
+          : SizedBox.shrink(),
       title: Text(
         title,
         style: TextStyle(

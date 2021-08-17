@@ -21,7 +21,6 @@ class ChatAppBar extends StatefulWidget implements PreferredSizeWidget {
   _ChatAppBarState createState() => _ChatAppBarState();
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(143);
 }
 

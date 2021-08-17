@@ -10,9 +10,9 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
+GetStorage box = GetStorage();
+
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  GetStorage box = GetStorage();
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -49,7 +49,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: !box.hasData('authToken')  ?  LoginPage(): HomePage(),
+      home: SafeArea(
+        child: !box.hasData('authToken') ? LoginPage() : HomePage(),
+      ),
     );
   }
 }

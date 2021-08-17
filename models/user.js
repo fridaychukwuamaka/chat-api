@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
+  groupList: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Group",
+    },
+  ],
 });
 
 userSchema.methods.generateAuthToken = function () {

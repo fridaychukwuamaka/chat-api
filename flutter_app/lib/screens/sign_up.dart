@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constant.dart';
+import 'package:flutter_app/providers/auth.dart';
 import 'package:flutter_app/screens/home_page.dart';
-import 'package:flutter_app/screens/providers/auth.dart';
 import 'package:flutter_app/widgets/app_button.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -56,152 +56,150 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: ListView(
-          padding: EdgeInsets.all(20),
-          children: [
-            SizedBox(
-              height: 20,
+    return Scaffold(
+      body: ListView(
+        padding: EdgeInsets.all(20),
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            height: 55,
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Text(
+            'Sign Up',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 26,
             ),
-            SizedBox(
-              height: 55,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+            'Enter your credentials to continue',
+            style: TextStyle(
+              color: Color(0xFF7C7C7C),
+              fontWeight: FontWeight.w500,
             ),
-            SizedBox(
-              height: 50,
-            ),
-            Text(
-              'Sign Up',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 26,
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Text(
-              'Enter your credentials to continue',
-              style: TextStyle(
-                color: Color(0xFF7C7C7C),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            InputWidget(
-              label: 'Username',
-              controller: _usernameController,
-              maxLines: 1,
-              isObsured: false,
-              hint: 'Jane Doe',
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            InputWidget(
-              label: 'Phone',
-              maxLines: 1,
-              controller: _phoneController,
-              isObsured: false,
-              keyboardType: TextInputType.phone,
-              hint: '+1234563895',
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            InputWidget(
-              label: 'Password',
-              maxLines: 1,
-              isObsured: true,
-              controller: _passwordController,
-              hint: 'password',
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text.rich(
-              TextSpan(
-                  text: 'By continuing you agree to our ',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    height: 1.8,
-                    color: Color(0xFF7C7C7C),
-                    fontSize: 14,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: 'Terms of Service',
-                      style: TextStyle(
-                        color: kMainBlue,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
-                    ),
-                    TextSpan(
-                      text: ' and ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF7C7C7C),
-                        fontSize: 14,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'Privacy Policy.',
-                      style: TextStyle(
-                        // color: AppColors.primaryColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ]),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            AppButton(
-              label: 'Sign Up',
-              onPressed: singUp,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Already have an account? ",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                  ),
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          InputWidget(
+            label: 'Username',
+            controller: _usernameController,
+            maxLines: 1,
+            isObsured: false,
+            hint: 'Jane Doe',
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          InputWidget(
+            label: 'Phone',
+            maxLines: 1,
+            controller: _phoneController,
+            isObsured: false,
+            keyboardType: TextInputType.phone,
+            hint: '+1234563895',
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          InputWidget(
+            label: 'Password',
+            maxLines: 1,
+            isObsured: true,
+            controller: _passwordController,
+            hint: 'password',
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text.rich(
+            TextSpan(
+                text: 'By continuing you agree to our ',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  height: 1.8,
+                  color: Color(0xFF7C7C7C),
+                  fontSize: 14,
                 ),
-                GestureDetector(
-                  child: Text(
-                    'Log In',
+                children: [
+                  TextSpan(
+                    text: 'Terms of Service',
                     style: TextStyle(
                       color: kMainBlue,
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
                     ),
                   ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => LoginPage(),
-                      ),
-                    );
-                  },
+                  TextSpan(
+                    text: ' and ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF7C7C7C),
+                      fontSize: 14,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'Privacy Policy.',
+                    style: TextStyle(
+                      // color: AppColors.primaryColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
+                ]),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          AppButton(
+            label: 'Sign Up',
+            onPressed: singUp,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Already have an account? ",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 50,
-            ),
-          ],
-        ),
+              ),
+              GestureDetector(
+                child: Text(
+                  'Log In',
+                  style: TextStyle(
+                    color: kMainBlue,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => LoginPage(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 50,
+          ),
+        ],
       ),
     );
   }

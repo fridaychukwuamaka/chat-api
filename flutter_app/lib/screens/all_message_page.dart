@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app/controllers/socket_controller.dart';
 import 'package:flutter_app/controllers/user_controller.dart';
 import 'package:flutter_app/models/socketStream.dart';
-import 'package:flutter_app/screens/providers/auth.dart';
+import 'package:flutter_app/providers/auth.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:flutter_app/models/user_chat.dart';
 import 'package:flutter_app/screens/chat_page.dart';
