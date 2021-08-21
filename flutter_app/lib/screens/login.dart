@@ -34,7 +34,6 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       Response response = await authProvider.Login(userDetail);
-      print(response.body);
 
       if (response.statusCode == 200) {
         Get.snackbar('Message', 'Welcome!!!',

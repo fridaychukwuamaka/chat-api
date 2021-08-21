@@ -1,4 +1,6 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 const router = express.Router();
 const { User, validate } = require("../models/user");
 const _ = require("lodash");
@@ -37,14 +39,18 @@ router.post("/register", async (req, res) => {
 });
 
 router.get("/", auth, async (req, res) => {
+  const token = req.header("x-auth-token");
 
-  let user = await User.findById(req.body._id);
+  if (!token) {
+    return res.status(401).send("Access denied. No token provided");
+  }
+ let user = await User.findById(req.user._id);
 
-  res.send(_.pick(user, ["_id", "username", "phone"]));
+ res.send(_.pick(user, ["_id", "username", "phone"]));
 });
 
 router.get("/friends", auth, async (req, res) => {
-  let user = await User.findById(req.body._id)
+  let user = await User.findById(req.user._id)
     .populate("friendList")
     .select("friendList");
   res.send(user);

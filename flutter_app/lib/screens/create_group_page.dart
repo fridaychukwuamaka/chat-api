@@ -18,6 +18,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
 
   var friendsList;
   String _groupName = 'New Group';
+  List<String> participantId = [];
 
   @override
   void initState() {
@@ -87,7 +88,11 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                         });
                       }
                     },
-                    onSubmitted: (val) {
+                    onSubmitted: (val) async {
+                      var payLoad = {'name': val, 'participant': participantId};
+
+                      await _authProvider.createGroup(payLoad);
+                      Get.back();
                       print(val);
                     },
                     decoration: InputDecoration(
@@ -117,7 +122,6 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                       itemCount: friendsList.length ?? 0,
                       itemBuilder: (context, index) {
                         List data = snapshot.data.body['friendList'];
-
                         data = data
                             .map((e) => UserChat(
                                   name: e['username'],
@@ -133,7 +137,25 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
                           isGeneric: true,
                           subTitle: userChat.lastMsg,
                           missedMsg: userChat.missedMsg.toString(),
-                          onTap: () {},
+                          trailing: Icon(
+                            participantId.indexWhere(
+                                        (e) => userChat.userId == e) ==
+                                    -1
+                                ? FeatherIcons.square
+                                : FeatherIcons.checkSquare,
+                          ),
+                          onTap: () {
+                            int i = participantId
+                                .indexWhere((e) => e == userChat.userId);
+                            if (i == -1) {
+                              setState(() {
+                                participantId.add(userChat.userId);
+                              });
+                            } else {
+                              participantId
+                                  .removeWhere((e) => e == userChat.userId);
+                            }
+                          },
                         );
                       },
                     );

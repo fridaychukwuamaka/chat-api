@@ -3,6 +3,7 @@ import 'package:flutter_app/constant.dart';
 import 'package:flutter_app/controllers/socket_controller.dart';
 import 'package:flutter_app/controllers/user_controller.dart';
 import 'package:flutter_app/providers/auth.dart';
+import 'package:flutter_app/screens/all_groups_page.dart';
 import 'package:flutter_app/screens/all_message_page.dart';
 import 'package:flutter_app/screens/create_group_page.dart';
 import 'package:flutter_app/widgets/chat_app_bar.dart';
@@ -33,8 +34,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   List tab = [
     'All Messages',
-    'Stories',
-    'Private',
+    /* 'Stories',
+    'Private', */
     'Groups',
   ];
 
@@ -63,10 +64,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   connect() async {
     socketController.socket = io(
-        kAddress,
-        // '10.0.2.16:8080'
-        OptionBuilder()
-            .setTransports(['websocket']).setQuery({'foo': userId}).build());
+      kAddress,
+      OptionBuilder()
+          .setTransports(['websocket']).setQuery({'foo': userId}).build(),
+    );
   }
 
   onPressFab() {
@@ -82,10 +83,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   IconData selectFabIcon() {
     if (_tabIndex == 0) {
       return FeatherIcons.edit;
-    } else if (_tabIndex == 3) {
-      return FeatherIcons.userPlus;
     } else {
-      return FeatherIcons.users;
+      return FeatherIcons.userPlus;
+     
     }
   }
 
@@ -125,13 +125,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           AllMessagePage(
             userId: userId,
           ),
-          AllMessagePage(
+       /*    AllMessagePage(
             userId: userId,
           ),
           AllMessagePage(
             userId: userId,
-          ),
-          AllMessagePage(
+          ), */
+          AllGroupPage(
             userId: userId,
           ),
         ],

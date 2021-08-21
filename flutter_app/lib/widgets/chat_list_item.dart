@@ -11,6 +11,7 @@ class ChatListItem extends StatelessWidget {
     @required this.missedMsg,
     @required this.onTap,
     this.isGeneric : false,
+    this.trailing : const SizedBox.shrink(),
   });
 
   final String leading;
@@ -18,6 +19,7 @@ class ChatListItem extends StatelessWidget {
   final String subTitle;
   final String missedMsg;
   final bool isGeneric ;
+  final Widget trailing ;
   final Function onTap;
 
   @override
@@ -58,7 +60,7 @@ class ChatListItem extends StatelessWidget {
                 ),
               ],
             )
-          : SizedBox.shrink(),
+          : trailing,
       title: Text(
         title,
         style: TextStyle(

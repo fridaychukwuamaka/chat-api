@@ -14,6 +14,7 @@ class AuthProvider extends GetConnect {
           "x-auth-token": box.read('authToken'),
         },
       );
+
   Future<Response> friends() => get(
         '$kAddress/api/user/friends',
         headers: {
@@ -21,9 +22,20 @@ class AuthProvider extends GetConnect {
         },
       );
 
+  Future<Response> createGroup(Map data) => post(
+        '$kAddress/api/group',
+        data,
+        headers: {
+          "x-auth-token": box.read('authToken'),
+        },
+      );
+
+  Future<Response> registeredGroup() => get(
+        '$kAddress/api/group/registered-group',
+        headers: {
+          "x-auth-token": box.read('authToken'),
+        },
+      );
+
   Future<Response> Login(Map data) => post('$kAddress/api/auth/', data);
-
-
-  // Post request with File
-
 }

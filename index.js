@@ -64,23 +64,37 @@ io.on("connection", (socket) => {
   });
 
   socket.on("join-friends-room", async (data) => {
+    console.log(data);
     room_name = `${data.sender}-${data.recepient}`;
     var alt_room_name = `${data.recepient}-${data.sender}`;
 
     var rooms = socket.adapter.rooms;
 
-    if (rooms[room_name] != null) {
-      socket.join(room_name);
-    } else if (rooms[alt_room_name] != null) {
-      socket.join(alt_room_name);
-      room_name = alt_room_name;
+    if (data.type == "one-to-one") {
+      if (rooms[room_name] != null) {
+        socket.join(room_name);
+      } else if (rooms[alt_room_name] != null) {
+        socket.join(alt_room_name);
+        room_name = alt_room_name;
+      } else {
+        socket.join(room_name);
+      }
     } else {
+      console.log("jdjhsdj");
+      room_name = `${data.recepient}`;
       socket.join(room_name);
+      console.log(rooms);
     }
 
-    let messages = await Message.find({
-      $where: `(this.sender == '${data.sender}' && this.recepient  == '${data.recepient}') || (this.recepient == '${data.sender}' && this.sender  == '${data.recepient}') `,
-    });
+    let messages;
+
+    if (data.type == "one-to-one") {
+      messages = await Message.find({
+        $where: `(this.sender == '${data.sender}' && this.recepient  == '${data.recepient}') || (this.recepient == '${data.sender}' && this.sender  == '${data.recepient}') `,
+      });
+    } else {
+      messages = await Message.find({ recepient: data.recepient });
+    }
 
     messages = JSON.stringify(messages);
     io.to(room_name).emit("chat-message", messages);
@@ -114,9 +128,15 @@ io.on("connection", (socket) => {
 
     await message.save();
 
-    let messages = await Message.find({
-      $where: `(this.sender == '${data.senderId}' && this.recepient  == '${data.recipientId}') || (this.recepient == '${data.senderId}' && this.sender  == '${data.recipientId}') `,
-    });
+    let messages;
+
+    if (data.type == "one-to-one") {
+      messages = await Message.find({
+        $where: `(this.sender == '${data.senderId}' && this.recepient  == '${data.recipientId}') || (this.recepient == '${data.senderId}' && this.sender  == '${data.recipientId}') `,
+      });
+    } else {
+        messages = await Message.find({recepient: data.recipientId});
+    }
 
     messages = JSON.stringify(messages);
 

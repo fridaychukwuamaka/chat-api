@@ -15,11 +15,13 @@ class ChatPage extends StatefulWidget {
   const ChatPage({
     @required this.name,
     @required this.friendId,
+    this.type: 'one-to-one',
     @required this.userId,
   });
 
   final String name;
   final String friendId;
+  final String type;
   final String userId;
 
   @override
@@ -54,6 +56,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       msg: message,
       time: date.toString(),
       recipientId: widget.friendId,
+      type: widget.type,
       sent: true,
     );
 
@@ -81,7 +84,11 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   Future<void> connect() async {
     print(socket.id);
 
-    var query = {"recepient": widget.friendId, "sender": widget.userId};
+    var query = {
+      "recepient": widget.friendId,
+      "sender": widget.userId,
+      "type": widget.type,
+    };
 
     socket.emit('join-friends-room', query);
 
@@ -175,7 +182,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                                   recipientId: '',
                                   time:
                                       '${DateFormat('hh:mm a').format(DateTime.parse(e['date']))}',
-                                  sent: widget.userId != e['recepient'],
+                                  sent: widget.userId == e['sender'],
                                   senderId: widget.userId,
                                 )))
                             .toList()
@@ -220,7 +227,6 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                         socket.emit('typing', 'Online');
                       });
                     },
-                    
                     controller: _messageController,
                     style: TextStyle(
                       color: Colors.black,
@@ -254,8 +260,8 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                   height: double.infinity,
                   child: TextButton(
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Color(0xFFDCEDF9)),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Color(0xFFDCEDF9)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(

@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
 class Chat {
-  const Chat({
+  const Chat( {
     @required this.senderId,
     @required this.msg,
+    this.type: 'one-to-one',
     @required this.time,
     @required this.sent,
     @required this.recipientId,
@@ -13,6 +14,7 @@ class Chat {
   final String time;
   final bool sent;
   final String recipientId;
+  final String type;
   final String senderId;
 
   toJson() {
@@ -21,6 +23,7 @@ class Chat {
       'time': time,
       'sent': sent,
       'recipientId': recipientId,
+      'type':type,
       'senderId': senderId
     };
   }
